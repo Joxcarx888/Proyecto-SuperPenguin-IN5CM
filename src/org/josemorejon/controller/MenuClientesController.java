@@ -19,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -26,6 +27,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.josemorejon.dao.Conexion;
 import org.josemorejon.dto.ClienteDTO;
 import org.josemorejon.model.Cliente;
+import org.josemorejon.utils.SuperPenguinAlertas;
 /**
  * FXML Controller class
  *
@@ -61,8 +63,10 @@ public class MenuClientesController implements Initializable {
             ClienteDTO.getClienteDTO().setCliente((Cliente)tblClientes.getSelectionModel().getSelectedItem());
             stage.formClientesView(2);
         }else if(event.getSource() == btnEliminar){
-            eliminarCliente(((Cliente)tblClientes.getSelectionModel().getSelectedItem()).getClienteId());
-            cargarDatos();
+            if(SuperPenguinAlertas.getInstance().mostrarAlertaConfirmacion(404).get() == ButtonType.OK){
+                eliminarCliente(((Cliente)tblClientes.getSelectionModel().getSelectedItem()).getClienteId());
+                cargarDatos();
+            }
         }else if (event.getSource() == btnBuscar){
             tblClientes.getItems().clear();
             if(tfClienteId.getText().equals("")){
@@ -211,6 +215,8 @@ public class MenuClientesController implements Initializable {
         }
         return cliente;
     }
+    
+    
     public Main getStage() {
         return stage;
     }

@@ -99,7 +99,7 @@ create table Productos(
     precioVentaUnitario decimal(10,2),
     precioVentaMayor decimal(10,2),
     precioCompra decimal(10,2),
-    imagenProducto Blob,
+    imagenProducto longblob,
     distribuidorId int not null,
     categoriaproductosId int not null,
     primary key PK_productoId(productoId),

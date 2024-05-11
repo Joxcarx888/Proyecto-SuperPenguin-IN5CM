@@ -11,7 +11,7 @@
    <children>
       <ImageView fitHeight="750.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../image/FondoFormCliente.jpg" />
+            <Image url="@../image/FondoFormCliente.png" />
          </image>
       </ImageView>
       <TextField fx:id="tfClienteId" editable="false" layoutX="75.0" layoutY="102.0" prefHeight="34.0" prefWidth="319.0" style="-fx-background-radius: 10; -fx-background-color: #FA9120;">

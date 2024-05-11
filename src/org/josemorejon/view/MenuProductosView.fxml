@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="750.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.josemorejon.controller.MenuProductosController">
+   <children>
+      <ImageView fitHeight="750.0" fitWidth="1200.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/MenuProductos.png" />
+         </image>
+      </ImageView>
+      <TableView fx:id="tblProductos" layoutX="316.0" layoutY="240.0" prefHeight="440.0" prefWidth="875.0">
+         <columns>
+            <TableColumn fx:id="colProductoId" minWidth="40.0" prefWidth="75.0" text="ProductoId" />
+            <TableColumn fx:id="colNombreP" minWidth="100.0" prefWidth="75.0" text="Nombre Producto" />
+            <TableColumn fx:id="colDescripcionP" minWidth="100.0" prefWidth="75.0" text="Descripcion " />
+            <TableColumn fx:id="colCantidadStock" minWidth="60.0" prefWidth="75.0" text="CantidadStock" />
+            <TableColumn fx:id="colPrecioVentaU" minWidth="60.0" prefWidth="75.0" text="PrecioVU" />
+            <TableColumn fx:id="colPrecioVentaM" minWidth="60.0" prefWidth="75.0" text="PrecioVM" />
+            <TableColumn fx:id="colPrecioC" minWidth="60.0" prefWidth="75.0" text="PrecioCompra" />
+            <TableColumn fx:id="colImagen" minWidth="100.0" prefWidth="75.0" text="Imagen" />
+            <TableColumn fx:id="colDistribuidorId" minWidth="100.0" prefWidth="75.0" text="Distribuidor" />
+            <TableColumn fx:id="colCategoriaPId" minWidth="100.0" prefWidth="75.0" text="Categoria" />
+         </columns>
+      </TableView>
+      <GridPane layoutX="110.0" layoutY="271.0" prefHeight="304.0" prefWidth="198.0">
+         <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Button fx:id="btnAgregar" alignment="CENTER" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: #F27B0F; -fx-background-radius: 40;" text="Agregar" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Harlow Solid Italic" size="22.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnEditar" alignment="CENTER" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: #F27B0F; -fx-background-radius: 40;" text="Editar" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Harlow Solid Italic" size="22.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnEliminar" alignment="CENTER" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: #F27B0F; -fx-background-radius: 40;" text="Eliminar" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Harlow Solid Italic" size="22.0" />
+               </font>
+            </Button>
+            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: #F27B0F; -fx-background-radius: 40;" text="Reportes" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Harlow Solid Italic" size="22.0" />
+               </font>
+            </Button>
+         </children>
+      </GridPane>
+      <TextField fx:id="tfProductoId" layoutX="440.0" layoutY="170.0" prefHeight="28.0" prefWidth="210.0" promptText="Ingrese el ID del producto a buscar" />
+      <Button fx:id="btnBuscar" layoutX="654.0" layoutY="169.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="28.0" prefWidth="23.0" style="-fx-background-color: #F27B0F; -fx-border-radius: 50;">
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="35.0" onDragDetected="#handleButtonAction" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/Lupa.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="btnRegresar" layoutX="33.0" layoutY="643.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="42.0" prefWidth="111.0" style="-fx-background-color: #F27B0F; -fx-background-radius: 40;" text="Regresar" textFill="WHITE">
+         <font>
+            <Font name="Harlow Solid Italic" size="18.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

@@ -13,13 +13,18 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="750.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.josemorejon.controller.MenuClientesController">
+<AnchorPane id="AnchorPane" prefHeight="750.0" prefWidth="1200.0" style="-fx-background-color: #F2D50F;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.josemorejon.controller.MenuClientesController">
    <children>
       <ImageView fitHeight="750.0" fitWidth="1200.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../image/ClientesFondo.png" />
          </image>
       </ImageView>
+      <TextArea editable="false" layoutX="1058.0" layoutY="225.0" prefHeight="211.0" prefWidth="122.0" style="-fx-control-inner-background: #F2D50F; -fx-border-width: 0; -fx-background-insets: 0; -fx-padding: 0;" text="Seleccione al cliente que desea eliminar o editar." wrapText="true">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </TextArea>
       <TableView fx:id="tblClientes" layoutX="53.0" layoutY="148.0" prefHeight="520.0" prefWidth="780.0">
         <columns>
           <TableColumn fx:id="colClienteId" prefWidth="130.0" text="ClienteID" />
@@ -78,10 +83,5 @@
             </ImageView>
          </graphic>
       </Button>
-      <TextArea editable="false" layoutX="1058.0" layoutY="225.0" prefHeight="211.0" prefWidth="122.0" style="-fx-background-color: ##EAC238;" text="Seleccione al cliente que desea eliminar o editar." wrapText="true">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </TextArea>
    </children>
 </AnchorPane>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.josemorejon.controller.FormFacturasController">
+   <children>
+      <ImageView fitHeight="750.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/FondoFormFacturas.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="tfFacturaId" editable="false" layoutX="75.0" layoutY="102.0" prefHeight="34.0" prefWidth="319.0" style="-fx-background-radius: 10; -fx-background-color: #FA9120;">
+         <font>
+            <Font name="Rockwell Condensed Bold" size="18.0" />
+         </font>
+      </TextField>
+      <Button fx:id="btnGuardar" layoutX="25.0" layoutY="682.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="54.0" prefWidth="101.0" style="-fx-background-radius: 40; -fx-background-color: #E7FA20;" text="Guardar">
+         <font>
+            <Font name="Harlow Solid Italic" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnRegresarFMA" layoutX="140.0" layoutY="682.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="54.0" prefWidth="101.0" style="-fx-background-radius: 40; -fx-background-color: #E7FA20;" text="Regresar">
+         <font>
+            <Font name="Harlow Solid Italic" size="15.0" />
+         </font>
+      </Button>
+      <ComboBox fx:id="cmbClientes" layoutX="75.0" layoutY="207.0" prefHeight="34.0" prefWidth="319.0" style="-fx-background-color: #FA9120; -fx-background-radius: 10;" />
+      <ComboBox fx:id="cmbEmpleados" layoutX="75.0" layoutY="306.0" prefHeight="34.0" prefWidth="319.0" style="-fx-background-color: #FA9120; -fx-background-radius: 10;" />
+   </children>
+</AnchorPane>
