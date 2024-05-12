@@ -12,7 +12,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -24,13 +23,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import org.josemorejon.dao.Conexion;
-import org.josemorejon.model.Factura;
+import org.josemorejon.model.Compra;
 import org.josemorejon.model.Producto;
 import org.josemorejon.system.Main;
 import org.josemorejon.utils.SuperPenguinAlertas;
 
-
-public class FormDetalleFacturaController implements Initializable {
+/**
+ * FXML Controller class
+ *
+ * @author josec
+ */
+public class FormDetalleCompraController implements Initializable {
     private Main stage;
     private int op;
     
@@ -42,31 +45,33 @@ public class FormDetalleFacturaController implements Initializable {
     Button btnRegresarFMA,btnGuardar;
    
    @FXML
-   TextField tfDetalleFacturaId;
+   TextField tfDetalleFacturaId,tfCantidadComprada;
    
    @FXML
-   ComboBox cmbFacturas,cmbProductos;
+   ComboBox cmbCompras,cmbProductos;
    
    @FXML
-private void handleButtonAction(ActionEvent event) {
-    if (event.getSource() == btnRegresarFMA) {
-        stage.menuFacturasView();
-    }else if (event.getSource() == btnGuardar) {
-        if (op == 1) {
-            agregarDetalleFactura();
-            SuperPenguinAlertas.getInstance().mostrarAlertasInformacion(400);
-            stage.menuFacturasView();
+    private void handleButtonAction(ActionEvent event) {
+        if (event.getSource() == btnRegresarFMA) {
+            stage.menuComprasView();
+        }else if (event.getSource() == btnGuardar) {
+            if (op == 1) {
+                agregarDetalleCompra();
+                SuperPenguinAlertas.getInstance().mostrarAlertasInformacion(400);
+                stage.menuComprasView();
+            }
         }
     }
-}
-
-    public void agregarDetalleFactura(){
+    
+    
+    public void agregarDetalleCompra(){
         try{
             conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "CALL sp_agregarDetalleFactura(?,?)";
+            String sql = "CALL sp_agregarDetalleCompra(?,?,?)";
             statement = conexion.prepareStatement(sql);
-            statement.setInt(1,((Producto)cmbProductos.getSelectionModel().getSelectedItem()).getProductoId());
-             statement.setInt(2,((Factura)cmbFacturas.getSelectionModel().getSelectedItem()).getFacturaId());
+            statement.setString(1, tfCantidadComprada.getText());
+            statement.setInt(2,((Producto)cmbProductos.getSelectionModel().getSelectedItem()).getProductoId());
+            statement.setInt(3,((Compra)cmbCompras.getSelectionModel().getSelectedItem()).getCompraId());
             statement.execute();
         }catch(SQLException e){
             System.out.println(e.getMessage());
@@ -84,58 +89,13 @@ private void handleButtonAction(ActionEvent event) {
             }
         }
     }
-
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        cmbFacturas.setItems(listarFacturas());
+        cmbCompras.setItems(listarCompras());
         cmbProductos.setItems(listarProductos());
         
-    }        
-    
-    public ObservableList<Factura> listarFacturas(){
-        ArrayList<Factura> facturas = new ArrayList<>();
-        
-        try{
-            conexion = Conexion.getInstance().obtenerConexion();
-            String sql = " CALL sp_ListarFacturas()";
-            statement = conexion.prepareStatement(sql);
-            resultSet = statement.executeQuery();
-            
-            while(resultSet.next()){
-                int facturaId = resultSet.getInt("facturaId");
-                Date fecha = resultSet.getDate("fecha");
-                Time hora = resultSet.getTime("hora");
-                String cliente = resultSet.getString("cliente");
-                String empleado = resultSet.getString("empleado");
-                Double total = resultSet.getDouble("total");
-            
-                facturas.add(new Factura(facturaId, fecha, hora, cliente, empleado, total));
-            }
-        }catch(SQLException e){
-            System.out.println(e.getMessage());
-        }finally{
-            try{
-                if(resultSet != null){
-                    resultSet.close();
-                }
-                
-                if(statement != null){
-                    statement.close();
-                }
-                
-                if(conexion != null){
-                    conexion.close();
-                }
-            }catch(SQLException e){
-                System.out.println(e.getMessage());
-            }
-        }
-        
-        
-        return FXCollections.observableList(facturas);
     }
-    
     
     public ObservableList<Producto> listarProductos(){
         ArrayList<Producto> productos = new ArrayList<>();
@@ -182,6 +142,46 @@ private void handleButtonAction(ActionEvent event) {
         
         
         return FXCollections.observableList(productos);
+    }
+    
+    public ObservableList<Compra> listarCompras(){
+        ArrayList<Compra> compras = new ArrayList<>();
+        
+        try{
+            conexion = Conexion.getInstance().obtenerConexion();
+            String sql = " CALL sp_ListarCompras()";
+            statement = conexion.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            
+            while(resultSet.next()){
+                int compraId = resultSet.getInt("compraId");
+                Date fecha = resultSet.getDate("fechaCompra");
+                Double total = resultSet.getDouble("totalCompra");
+            
+                compras.add(new Compra(compraId, fecha,total));
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }finally{
+            try{
+                if(resultSet != null){
+                    resultSet.close();
+                }
+                
+                if(statement != null){
+                    statement.close();
+                }
+                
+                if(conexion != null){
+                    conexion.close();
+                }
+            }catch(SQLException e){
+                System.out.println(e.getMessage());
+            }
+        }
+        
+        
+        return FXCollections.observableList(compras);
     }
     
     public Main getStage() {

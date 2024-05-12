@@ -19,6 +19,7 @@ import org.josemorejon.controller.FormCargoController;
 import org.josemorejon.controller.FormCategoriaPController;
 import org.josemorejon.controller.FormClienteController;
 import org.josemorejon.controller.FormComprasController;
+import org.josemorejon.controller.FormDetalleCompraController;
 import org.josemorejon.controller.FormDetalleFacturaController;
 import org.josemorejon.controller.FormDistribuidoresController;
 import org.josemorejon.controller.FormEmpleadosController;
@@ -263,6 +264,16 @@ public class Main extends Application {
             FormComprasController formCompras = (FormComprasController)switchScene("FormComprasView.fxml", 500, 750);
             formCompras.setOp(op);
             formCompras.setStage(this);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public void formDetalleCompraView(int op){
+        try{
+            FormDetalleCompraController formDetalleFactura = (FormDetalleCompraController)switchScene("FormDetalleCompraView.fxml", 500, 750);
+            formDetalleFactura.setOp(op);
+            formDetalleFactura.setStage(this);
         }catch(Exception e){
             System.out.println(e.getMessage());
         }

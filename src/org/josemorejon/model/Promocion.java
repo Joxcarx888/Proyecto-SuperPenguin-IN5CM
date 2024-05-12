@@ -87,7 +87,7 @@ public class Promocion {
 
     @Override
     public String toString() {
-        return "Promocion{" + "promocionId=" + promocionId + ", precioProm=" + precioProm + ", descripcionProm=" + descripcionProm + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", productoId=" + productoId + ", producto=" + producto + '}';
+        return "Id: " + promocionId + " | " + producto;
     }
 
     
