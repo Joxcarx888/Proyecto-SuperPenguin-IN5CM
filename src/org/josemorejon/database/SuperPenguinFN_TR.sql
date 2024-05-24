@@ -1,70 +1,75 @@
 use SuperPenguin;
 
 
-Delimiter $$
-create function fn_CalcularPromocion(prodId int) returns decimal (10,2) deterministic
-begin
-	declare resultado int default 0;
-    declare fechaFin date;
-    declare i int default 1;
+DELIMITER $$
+CREATE FUNCTION fn_CalcularPromocion(prodId INT) RETURNS INT DETERMINISTIC
+BEGIN
+    DECLARE resultado INT DEFAULT 0;
+    DECLARE fechaFin DATE;
 
-    resultadoLoop : loop
-    
+    SELECT fechaFinalizacion INTO fechaFin FROM Promociones
+		WHERE productoId = prodId
+			ORDER BY fechaFinalizacion DESC LIMIT 1;
 
-    if fechaFinalizacion = (select promocionId from promociones PR where promocionId = i) then
-		set fechaFin = (select PR.fechaFinalizacion from Promociones PR where productoId = (select productoId from Promociones where promocionId = i));
+    IF fechaFin IS NOT NULL AND fechaFin > DATE(NOW()) THEN
+        SET resultado = 1;
+    ELSE
+        SET resultado = 0;
+    END IF;
+
+    RETURN resultado;
+END$$
+DELIMITER ;
+
+
+DELIMITER $$
+CREATE FUNCTION fn_totalFactura(factId INT) RETURNS DECIMAL(10,2) DETERMINISTIC
+BEGIN
+    DECLARE totalF DECIMAL(10,2) DEFAULT 0.0;
+    DECLARE subtotalF DECIMAL(10,2) DEFAULT 0.0;
+    DECLARE precio DECIMAL(10,2);
+    DECLARE curProductoId INT;
+    DECLARE cursorDetalleFactura CURSOR FOR 
+        SELECT DF.productoId  FROM DetalleFactura DF
+			WHERE DF.facturaId = factId;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET curProductoId = NULL;
+
+    SELECT total INTO totalF FROM Facturas
+		WHERE facturaId = factId;
+
+    IF totalF IS NULL THEN
+        SET totalF = 0.0;
+    END IF;
+
+    OPEN cursorDetalleFactura;
+    totalLoop: LOOP
+        FETCH cursorDetalleFactura INTO curProductoId;
+        IF curProductoId IS NULL THEN
+            LEAVE totalLoop;
+        END IF;
+
+        IF fn_CalcularPromocion(curProductoId) = 1 THEN
+            SELECT P.precioPromocion INTO precio FROM Promociones P
+				WHERE P.productoId = curProductoId
+				ORDER BY P.fechaFinalizacion DESC LIMIT 1;
+        ELSE
+            SELECT P.precioVentaUnitario INTO precio FROM Productos P
+				WHERE P.productoId = curProductoId;
+        END IF;
         
-		 if fechaFin>date(now()) then
-			set resultado = 0;
-		else 
-			set resultado = 1;
-         end if;
-    end if;
-    
-    if i = (select count(*) from Promociones) then
-		leave resultadoLoop;
-    end if;
-    
-    set i = i +1;
-    end loop resultadoLoop;
-    
-    return resultado;
-end $$
-Delimiter ;
+        SET subtotalF = subtotalF + precio;
+    END LOOP totalLoop;
+    CLOSE cursorDetalleFactura;
+
+    SET totalF = subtotalF * 1.12;
+
+    CALL sp_asignarTotalFactura(factId, totalF);
+
+    RETURN totalF;
+END$$
+DELIMITER ;
 
 
-Delimiter $$
-create function fn_totalFactura(factId int) returns decimal(10,2) deterministic
-begin
-    declare total decimal(10,2) default 0.0;
-    declare i int default 1;
-    declare precio decimal(10,2);
-
-    totalLoop: loop
-        if fn_CalcularPromocion(factId) = 0 then
-            if factId = (select facturaId from detalleFactura DF where detalleFacturaId = i) then
-                set precio = (select P.precioVentaUnitario from Productos P where productoId = (select productoId from detalleFactura where detalleFacturaId = i));
-                set total = total + precio + (precio*0.12);
-            end if;
-        else 
-            if factId = (select facturaId from detalleFactura DF where detalleFacturaId = i) then
-                set precio = (select PR.precioPromocion from Prmociones PR where productoId = (select productoId from detalleFactura where detalleFacturaId = i));
-                set total = total + precio + (precio*0.12);
-            end if;
-        end if;
-
-        if i = (select count(*) from detalleFactura) then
-            leave totalLoop;
-        end if;
-
-        set i = i + 1;
-    end loop totalLoop;
-
-    call sp_asignarTotalFactura(factId,total);
-
-    return total;
-end $$
-Delimiter ;
 
 
 
@@ -97,6 +102,14 @@ Begin
 End$$
 Delimiter ;
 
+
+
+
+
+
+
+
+
 Delimiter $$
 create function fn_totalCompra(compId int) returns decimal (10,2) deterministic
 begin
@@ -104,17 +117,24 @@ begin
     declare i int default 1;
     declare precio decimal (10,2);
     declare cantidadComprada int default 0;
+    declare curCantidadCompra, curProductoId, curCompraId int;
+    
+    declare cursorDetalleCompra cursor for
+		select DC.cantidadCompra, DC.productoId, DC.compraId from DetalleCompra DC
+	;
+    
+    open cursorDetalleCompra;
     
     totalLoop : loop
+    fetch cursorDetalleCompra into curCantidadCompra, curProductoId, curCompraId;
     
-    if compId = (select DC.compraId from detalleCompra DC where detalleCompraId = i) then
-		set precio = (select P.precioCompra from Productos P where productoId = (select productoId from detalleFactura where detalleCompraId = i));
-        set cantidadComprada = (select DC.cantidadCompra from detalleCompra DC where productoId = (select productoId from detalleCompra where detalleCompraId = i));
-        
-        set totalC = precio * cantidadComprada + (cantidadComprada*precio*1.12);
+    if compId = curCompraId then
+		set precio = (select P.precioCompra from Productos P where P.productoId = curProductoId);
+		set cantidadComprada = curCantidadCompra;
+		set totalC = totalC + (precio * cantidadComprada + (cantidadComprada*precio*0.12));
     end if;
     
-    if i = (select count(*) from detalleFactura) then
+    if i = (select count(*) from detalleCompra) then
 		leave totalLoop;
     end if;
     
@@ -135,16 +155,17 @@ begin
     declare cantidadComprada int default 0;
     declare cantidad int default 0;
 	
-    select cantidadStock into cantidad from productos where productoId = productId;
-    select cantidadCompra into cantidadComprada from detalleCompra where productoId = productId;
+    select cantidadStock into cantidad from productos where productoId = productId LIMIT 1;
+    select cantidadCompra into cantidadComprada from detalleCompra where productoId = productId LIMIT 1;
     
-    set stockActual = cantidadComprada + cantidad;
+    set stockActual = stockActual + cantidadComprada + cantidad;
     
     call sp_modificarStockCompra(productId, stockActual);
     
     return stockActual;
 end $$
 Delimiter ;
+
 
 Delimiter $$
 create trigger tg_totalCompra

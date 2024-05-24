@@ -15,11 +15,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import org.josemorejon.dao.Conexion;
 import org.josemorejon.dto.ClienteDTO;
 import org.josemorejon.model.Cliente;
 import org.josemorejon.system.Main;
+import org.josemorejon.utils.SuperPenguinAlertas;
 
 /**
  * FXML Controller class
@@ -47,12 +49,42 @@ public class FormClienteController implements Initializable {
             stage.menuClientesView();
         }else if(event.getSource() == btnGuardar){
             if(op == 1){
-                agregarCliente();
-                stage.menuClientesView();
+                if(!tfNombre.getText().equals("") && !tfApellido.getText().equals("") && !tfDireccion.getText().equals("")){
+                    agregarCliente();
+                    SuperPenguinAlertas.getInstance().mostrarAlertasInformacion(400);
+                    stage.menuClientesView();
+                }else{
+                    SuperPenguinAlertas.getInstance().mostrarAlertasInformacion(33);
+                    if(tfNombre.getText().equals("")){
+                        tfNombre.requestFocus();
+                    }else if(tfApellido.getText().equals("")){
+                        tfApellido.requestFocus();
+                    }else{
+                        tfDireccion.requestFocus();
+                    }
+                }
+                
+               
             }else if(op == 2){
-                editarCliente();
-                ClienteDTO.getClienteDTO().setCliente(null);
-                stage.menuClientesView();
+                if(!tfNombre.getText().equals("") && !tfApellido.getText().equals("") && !tfDireccion.getText().equals("")){
+                    if(SuperPenguinAlertas.getInstance().mostrarAlertaConfirmacion(505).get() == ButtonType.OK){
+                        editarCliente();
+                        ClienteDTO.getClienteDTO().setCliente(null);
+                        SuperPenguinAlertas.getInstance().mostrarAlertasInformacion(500);
+                        stage.menuClientesView();
+                    }else{
+                        stage.menuClientesView();
+                    }
+                }else{
+                    SuperPenguinAlertas.getInstance().mostrarAlertasInformacion(33);
+                    if(tfNombre.getText().equals("")){
+                        tfNombre.requestFocus();
+                    }else if(tfApellido.getText().equals("")){
+                        tfApellido.requestFocus();
+                    }else{
+                        tfDireccion.requestFocus();
+                    }
+                }
                 
             }
         }

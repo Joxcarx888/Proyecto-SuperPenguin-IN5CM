@@ -14,11 +14,20 @@
             <Image url="@../image/MenuPrincipal.png" />
          </image>
       </ImageView>
-      <MenuBar prefHeight="25.0" prefWidth="950.0" style="-fx-background-color: #FA9220;">
+      <MenuBar prefHeight="25.0" prefWidth="950.0" style="-fx-background-color: #FA9220; -fx-control-inner-background: #FA9220; -fx-font-weight: bold;">
         <menus>
-          <Menu mnemonicParsing="false" text="Módulos">
+          <Menu mnemonicParsing="false" style="-fx-background-color: #FA9220;" text="Módulos">
             <items>
-              <MenuItem fx:id="btnClientes" mnemonicParsing="false" onAction="#handleButtonAction" text="Clientes" />
+              <MenuItem fx:id="btnClientes" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: #FA9220; -fx-font-weight: bold;" text="Clientes" />
+                  <MenuItem fx:id="btnTicketSoporte" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: #FA9220;" text="Ticket Soporte" />
+                  <MenuItem fx:id="btnCargos" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: #FA9220; -fx-font-weight: bold;" text="Cargos" />
+                  <MenuItem fx:id="btnDistribuidores" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: #FA9220; -fx-font-weight: bold;" text="Distribuidores" />
+                  <MenuItem fx:id="btnCategoriaP" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: #FA9220; -fx-font-weight: bold;" text="Categoria P" />
+                  <MenuItem fx:id="btnEmpleados" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: #FA9220; -fx-font-weight: bold;" text="Empleados" />
+                  <MenuItem fx:id="btnProductos" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: #FA9220; -fx-font-weight: bold;" text="Productos" />
+                  <MenuItem fx:id="btnPromociones" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: #FA9220; -fx-font-weight: bold;" text="Promociones" />
+                  <MenuItem fx:id="btnFacturas" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: #FA9220; -fx-font-weight: bold;" text="Facturas" />
+                  <MenuItem fx:id="btnCompras" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: #FA9220; -fx-font-weight: bold;" text="Compras" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Reportes" />

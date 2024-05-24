@@ -76,6 +76,11 @@ public class Cliente {
     public void setNit(String nit) {
         this.nit = nit;
     }
+
+    @Override
+    public String toString() {
+        return "Id: " + clienteId + " | " + nombre + " " + apellido;
+    }
     
     
     
