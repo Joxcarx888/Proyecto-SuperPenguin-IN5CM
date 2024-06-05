@@ -52,6 +52,18 @@ public class SuperPenguinAlertas {
             alert.setHeaderText("Error al Eliminar");
             alert.setContentText("Este registro se esta usando en una entIdad, por ende no puede ser borrado.");
             alert.showAndWait();
+        }else if(code == 5){// Codigo 5 sirve errores al no encontrar un usuario
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Usuario Incorrecto");
+            alert.setHeaderText("Usuario Incorrecto");
+            alert.setContentText("Verifique su Usuario");
+            alert.showAndWait();
+        }else if(code == 888){// Codigo 888 sirve error en la contraseña
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Contraseña Incorrecta ");
+            alert.setHeaderText("Contraseña Incorrecta");
+            alert.setContentText("Verifique su  Contraseña");
+            alert.showAndWait();
         }
         
         
@@ -77,8 +89,24 @@ public class SuperPenguinAlertas {
             alert.setContentText("¿Desea confirmar la edicion del registro?");
             action = alert.showAndWait();
         }
+        
+        if(code == 606){//Codigo 606 sirve para confirmar que se ha cerrado la sesion
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Cerrar Sesion ");
+            alert.setHeaderText("Cerrar Sesion");
+            alert.setContentText("¿Desea salir del programa?");
+            action = alert.showAndWait();
+        }
         return action;
     }
     
+    public void alertaSaludo(String usuario){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Bienvenida ");
+        alert.setHeaderText("Bienvendio " + usuario);
+        alert.setContentText("Ahora Puedes Admninistrar este programa");
+        alert.showAndWait();    
+       
+    }
     
 }

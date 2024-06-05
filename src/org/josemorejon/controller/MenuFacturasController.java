@@ -28,6 +28,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.josemorejon.dao.Conexion;
 import org.josemorejon.dto.FacturaDTO;
 import org.josemorejon.model.Factura;
+import org.josemorejon.report.GenerarReporte;
 import org.josemorejon.system.Main;
 import org.josemorejon.utils.SuperPenguinAlertas;
 
@@ -47,7 +48,7 @@ public class MenuFacturasController implements Initializable {
     TableColumn colFacturaId,colFecha,colHora,colCliente,colEmpleado,colTotal;
     
     @FXML
-    Button btnRegresar,btnAgregar,btnEditar,btnEliminar,btnBuscar,btnAgregarDF;
+    Button btnRegresar,btnAgregar,btnEditar,btnEliminar,btnBuscar,btnAgregarDF,btnVerFactura;
     
     @FXML
     TextField tfFacturaId;
@@ -78,6 +79,8 @@ public class MenuFacturasController implements Initializable {
             }
         }else if(event.getSource() == btnAgregarDF){
             stage.formDetalleFacturaView(1);
+        }else if(event.getSource() == btnVerFactura){
+            GenerarReporte.getInstance().generarFactura(((Factura)tblFacturas.getSelectionModel().getSelectedItem()).getFacturaId());
         }
     }
     

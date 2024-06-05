@@ -20,12 +20,12 @@
             <Font name="Rockwell Condensed Bold" size="18.0" />
          </font>
       </TextField>
-      <Button fx:id="btnIniciar" layoutX="152.0" layoutY="498.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="54.0" prefWidth="141.0" style="-fx-background-radius: 40; -fx-background-color: #E7FA20;" text="INICIAR SESION">
+      <Button fx:id="btnIniciar" layoutX="137.0" layoutY="496.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="54.0" prefWidth="180.0" style="-fx-background-radius: 40; -fx-background-color: #E7FA20;" text="INICIAR SESION">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="btnRegistrar" layoutX="152.0" layoutY="586.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="54.0" prefWidth="141.0" style="-fx-background-radius: 40; -fx-background-color: #E7FA20;" text="REGISTRARSE">
+      <Button fx:id="btnRegistrar" disable="true" layoutX="137.0" layoutY="580.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="54.0" prefWidth="180.0" style="-fx-background-radius: 40; -fx-background-color: #E7FA20;" text="REGISTAR USUARIO">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="15.0" />
          </font>

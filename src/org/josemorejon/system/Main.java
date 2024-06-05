@@ -26,6 +26,7 @@ import org.josemorejon.controller.FormEmpleadosController;
 import org.josemorejon.controller.FormFacturasController;
 import org.josemorejon.controller.FormProductosController;
 import org.josemorejon.controller.FormPromocionesController;
+import org.josemorejon.controller.Grafica1Controller;
 import org.josemorejon.controller.MenuCargosController;
 import org.josemorejon.controller.MenuCategoriaPController;
 import org.josemorejon.controller.MenuClientesController;
@@ -37,6 +38,7 @@ import org.josemorejon.controller.MenuInicioSesionController;
 import org.josemorejon.controller.MenuPrincipalController;
 import org.josemorejon.controller.MenuProductosController;
 import org.josemorejon.controller.MenuPromocionesController;
+import org.josemorejon.controller.MenuRegistrarUsuarioController;
 import org.josemorejon.controller.MenuTicketSoporteController;
  
 public class Main extends Application {
@@ -167,7 +169,7 @@ public class Main extends Application {
     
     public void formEmpleadosView(int op){
         try{
-            FormEmpleadosController formEmpleado = (FormEmpleadosController)switchScene("FormEmpleadosView.fxml", 500, 1000);
+            FormEmpleadosController formEmpleado = (FormEmpleadosController)switchScene("FormEmpleadosView.fxml", 500, 900);
             formEmpleado.setOp(op);
             formEmpleado.setStage(this);
         }catch(Exception e){
@@ -284,6 +286,24 @@ public class Main extends Application {
         try{
             MenuInicioSesionController menuInicioSesion = (MenuInicioSesionController)switchScene("MenuInicioSesionView.fxml", 500, 750);
             menuInicioSesion.setStage(this);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public void menuRegistrarUsuarioView(){
+        try{
+            MenuRegistrarUsuarioController menuRegistrarUsuario = (MenuRegistrarUsuarioController)switchScene("MenuRegistrarUsuarioView.fxml", 500, 750);
+            menuRegistrarUsuario.setStage(this);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public void graficaSueldos(){
+        try{
+            Grafica1Controller graficaSueldos = (Grafica1Controller)switchScene("Grafica1View.fxml", 1200, 750);
+            graficaSueldos.setStage(this);
         }catch(Exception e){
             System.out.println(e.getMessage());
         }

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Productos" pageWidth="1000" pageHeight="800" columnWidth="960" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f235a042-99a4-4472-b60f-ba7dbe4fc46f">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DBSuperPenguin"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT P.productoId, P.nombreProducto, P.descripcionProducto, P.cantidadStock, P.precioVentaUnitario, P.precioVentaMayor,  P.precioCompra,P.imagenProducto, 
+       CONCAT("Distribuidor: ", D.nombreDistribuidor) AS distribuidor,
+       CONCAT("Categoría: ", CP.nombreCategoria) AS categoria
+	FROM Productos P
+	JOIN Distribuidores D ON P.distribuidorId = D.distribuidorId
+	JOIN CategoriaProductos CP ON P.categoriaproductosId = CP.categoriaproductosId]]>
+	</queryString>
+	<field name="productoId" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="productoId"/>
+		<property name="com.jaspersoft.studio.field.label" value="productoId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
+	</field>
+	<field name="nombreProducto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombreProducto"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombreProducto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
+	</field>
+	<field name="descripcionProducto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="descripcionProducto"/>
+		<property name="com.jaspersoft.studio.field.label" value="descripcionProducto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
+	</field>
+	<field name="cantidadStock" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="cantidadStock"/>
+		<property name="com.jaspersoft.studio.field.label" value="cantidadStock"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
+	</field>
+	<field name="precioVentaUnitario" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="precioVentaUnitario"/>
+		<property name="com.jaspersoft.studio.field.label" value="precioVentaUnitario"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
+	</field>
+	<field name="precioVentaMayor" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="precioVentaMayor"/>
+		<property name="com.jaspersoft.studio.field.label" value="precioVentaMayor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
+	</field>
+	<field name="precioCompra" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="precioCompra"/>
+		<property name="com.jaspersoft.studio.field.label" value="precioCompra"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
+	</field>
+	<field name="imagenProducto" class="java.awt.Image">
+		<property name="com.jaspersoft.studio.field.name" value="imagenProducto"/>
+		<property name="com.jaspersoft.studio.field.label" value="imagenProducto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
+	</field>
+	<field name="distribuidor" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="distribuidor"/>
+		<property name="com.jaspersoft.studio.field.label" value="distribuidor"/>
+	</field>
+	<field name="categoria" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="categoria"/>
+		<property name="com.jaspersoft.studio.field.label" value="categoria"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="112" splitType="Stretch">
+			<staticText>
+				<reportElement x="370" y="21" width="270" height="80" uuid="2f370cc3-2faf-4488-a419-5df44f35935c"/>
+				<textElement>
+					<font fontName="Cooper Black" size="50"/>
+				</textElement>
+				<text><![CDATA[Productos]]></text>
+			</staticText>
+			<image>
+				<reportElement x="230" y="0" width="120" height="112" uuid="15baf272-0642-4b25-ac06-1acf13813c10"/>
+				<imageExpression><![CDATA["https://i.ibb.co/grm3xcV/IMG-20240605-WA0000.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="55" splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="167" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="40" width="60" height="60" uuid="b7007544-0f25-4c78-a30b-305b1321b1e1"/>
+				<textElement>
+					<font fontName="Cooper Black" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productoId}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="40" width="100" height="60" uuid="c031fccd-6dc3-4821-8950-ec61a073b61b"/>
+				<textElement>
+					<font fontName="Cooper Black" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombreProducto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="160" y="40" width="100" height="60" uuid="5d2bf8fb-d836-4272-8dab-59065033dfbe"/>
+				<textElement>
+					<font fontName="Cooper Black" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descripcionProducto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="260" y="40" width="100" height="60" uuid="7a8cac5d-9c1d-45dc-9633-6c5674ae9b10"/>
+				<textElement>
+					<font fontName="Cooper Black" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantidadStock}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="360" y="40" width="100" height="60" uuid="47398850-0321-4371-bfda-257ac80b49cf"/>
+				<textElement>
+					<font fontName="Cooper Black" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{precioVentaUnitario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="40" width="100" height="60" uuid="38b938ff-5ebf-448e-8db9-7c2ec08a55e9"/>
+				<textElement>
+					<font fontName="Cooper Black" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{precioVentaMayor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="560" y="40" width="100" height="60" uuid="00440fc3-5c22-48c0-a808-be2622d432b2"/>
+				<textElement>
+					<font fontName="Cooper Black" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{precioCompra}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="750" y="40" width="100" height="60" uuid="78c9f2a2-a2f3-457e-a3b2-503ced7b2258"/>
+				<textElement>
+					<font fontName="Cooper Black" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{distribuidor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="850" y="40" width="100" height="60" uuid="decfe066-cf96-42f5-8a69-4a183a8de87d"/>
+				<textElement>
+					<font fontName="Cooper Black" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{categoria}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="660" y="40" width="50" height="60" uuid="9f219789-fd99-4648-b01e-12e05be8afcb"/>
+				<textElement>
+					<font fontName="Cooper Black" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{imagenProducto}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="660" y="40" width="90" height="80" uuid="fad3b1ff-4d18-436a-b160-482b1f86c162"/>
+				<imageExpression><![CDATA[$F{imagenProducto}]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+</jasperReport>

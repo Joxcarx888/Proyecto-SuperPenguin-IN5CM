@@ -7,13 +7,20 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
+import org.josemorejon.report.GenerarReporte;
+import org.josemorejon.utils.SuperPenguinAlertas;
 
 public class MenuPrincipalController implements Initializable{
     private Main stage;
     
     @FXML
-    MenuItem btnClientes, btnTicketSoporte,btnCargos,btnDistribuidores,btnCategoriaP,btnEmpleados,btnProductos,btnPromociones,btnFacturas,btnCompras;
+    Button btnCerrarSesion;
+    
+    @FXML
+    MenuItem btnClientes, btnTicketSoporte,btnCargos,btnDistribuidores,btnCategoriaP,btnEmpleados,btnProductos,btnPromociones,btnFacturas,btnCompras,btnSueldoEmpleados,btnClientes3,btnProductos3;
     
     @FXML
     public void handleButtonAction(ActionEvent event) {
@@ -37,6 +44,16 @@ public class MenuPrincipalController implements Initializable{
             stage.menuFacturasView();
         }else if(event.getSource() == btnCompras){
             stage.menuComprasView();
+        }else if(event.getSource() == btnCerrarSesion){
+            if(SuperPenguinAlertas.getInstance().mostrarAlertaConfirmacion(606).get() == ButtonType.OK){
+                stage.menuInicioSesionView();
+            }
+        }else if(event.getSource() == btnSueldoEmpleados){
+            stage.graficaSueldos();
+        }else if(event.getSource() == btnClientes3){
+            GenerarReporte.getInstance().generarClientes();
+        }else if(event.getSource() == btnProductos3){
+            GenerarReporte.getInstance().generarProductos();
         }
     }
 

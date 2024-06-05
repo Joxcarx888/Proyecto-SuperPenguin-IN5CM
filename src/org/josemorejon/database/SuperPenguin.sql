@@ -139,10 +139,34 @@ create table Promociones(
     fechaInicio Date not null,
     fechaFinalizacion Date not null,
     productoId int not null,
-    primary key promocionId(promocionId),
+    primary key PK_promocionId(promocionId),
     constraint FK_productoId_Promociones foreign key (productoId)
             references Productos(productoId)
 );
+
+
+create table NivelesAcceso(
+	nivelAccesoId int not null auto_increment,
+    nivelAcceso varchar(40) not null,
+    primary key PK_nivelAccesoId(nivelAccesoId)
+
+);
+
+
+create table Usuarios(
+    usarioId int not null auto_increment,
+    usuario varchar (30) not null,
+    contrasenia varchar (100) not null,
+    nivelAccesoId int not null,
+    empleadoId int not null,
+    primary key PK_usarioId(usarioId),
+    constraint FK_Usuarios_NivelesAcceso foreign key (nivelAccesoId)
+            references NivelesAcceso(nivelAccesoId),
+    constraint FK_Usuarios_Empleados foreign key (empleadoId)
+            references Empleados(empleadoId)
+);
+
+
 
 
 
@@ -154,6 +178,9 @@ INSERT INTO Clientes ( nombre, apellido, telefono, direccion, nit) values
     ('Fernando ', 'Alonso', '3333-1414', 'Ciudad' , '3333310101'),
     ('Cristiano', 'Ronaldo', '7928-7928', 'Ciudad', '3333310101');
     
+INSERT INTO NivelesAcceso (nivelAcceso) VALUES 
+	('admin'), 
+	('trabajador');
 
     
     

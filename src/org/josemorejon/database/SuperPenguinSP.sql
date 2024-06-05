@@ -842,5 +842,29 @@ begin
 end $$
 Delimiter ;
 
+DELIMITER $$
+CREATE PROCEDURE sp_agregarUsuario(usu VARCHAR(30),cont VARCHAR(100), nivAccId INT, empId INT)
+BEGIN
+    INSERT INTO Usuarios(usuario, contrasenia, nivelAccesoId, empleadoId)
+    VALUES (usu, cont, nivAccId, empId);
+END$$
+DELIMITER ;
 
+DELIMITER $$
+create procedure sp_buscarUsuarios(us varchar(30))
+begin
+	select * from Usuarios
+		where usuario = us;
+end $$
+DELIMITER ;
+
+call sp_buscarUsuarios('XD');
+DELIMITER $$
+create procedure sp_listarNivelesAcceso()
+begin
+	select * from NivelesAcceso;
+end $$
+DELIMITER ;
+
+call sp_listarNivelesAcceso();
 

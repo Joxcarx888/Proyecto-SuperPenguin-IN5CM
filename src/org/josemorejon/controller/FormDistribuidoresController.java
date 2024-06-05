@@ -64,7 +64,7 @@ public class FormDistribuidoresController implements Initializable {
                 
             }else if(op == 2){
                 if(!tfNombreDistribuidor.getText().equals("") && !tfDireccionDistribuidor.getText().equals("") && !tfNitDistribuidor.getText().equals("") && !tfTelefonoDistribuidor.getText().equals("")){
-                    editarCargo();
+                    editarDistribuidor();
                     if(SuperPenguinAlertas.getInstance().mostrarAlertaConfirmacion(505).get() == ButtonType.OK){
                         DistribuidorDTO.getDistribuidorDTO().setDistribuidor(null);
                         SuperPenguinAlertas.getInstance().mostrarAlertasInformacion(500);
@@ -135,7 +135,7 @@ public class FormDistribuidoresController implements Initializable {
         }
     }
     
-    public void editarCargo(){
+    public void editarDistribuidor(){
         try{
             conexion = Conexion.getInstance().obtenerConexion();
             String sql = "CALL sp_EditarDistribuidor(?,?,?,?,?,?)";

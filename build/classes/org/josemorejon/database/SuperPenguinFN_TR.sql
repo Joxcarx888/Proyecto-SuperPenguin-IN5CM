@@ -7,8 +7,7 @@ BEGIN
     DECLARE resultado INT DEFAULT 0;
     DECLARE fechaFin DATE;
 
-    SELECT fechaFinalizacion INTO fechaFin
-		FROM Promociones
+    SELECT fechaFinalizacion INTO fechaFin FROM Promociones
 		WHERE productoId = prodId
 			ORDER BY fechaFinalizacion DESC LIMIT 1;
 
@@ -23,37 +22,52 @@ END$$
 DELIMITER ;
 
 
-Delimiter $$
-create function fn_totalFactura(factId int) returns decimal(10,2) deterministic
-begin
-    declare total decimal(10,2) default 0.0;
-    declare precio decimal(10,2);
-    declare i int default 1;
-    declare curFacturaId, curProductoId int;
-    declare cursorDetalleFactura cursor for 
-		select DF.facturaId, DF.productoId from DetalleFactura DF
-	;
-    open cursorDetalleFactura;
-    totalLoop : loop
-    fetch cursorDetalleFactura into curFacturaId, curProductoId;
-    if factId = curFacturaId then
-		if(fn_CalcularPromocion(curProductoId) = 0) then
-			set precio = (select P.precioVentaUnitario from Productos P where P.productoId = curProductoId);
-		else 
-			set precio = (select P.precioPromocion from Promociones P where P.promocionId = fn_CalcularPromocion(curProductoId));
-        end if;
-        set total = total + (precio * 1.12);
-    end if;
-    if i = (select count(*) from detalleFactura) then
-		leave totalLoop;
-    end if;
-    set i = i + 1;
-    end loop totalLoop;
-    
-    call sp_asignarTotalFactura(factId,total);
-    return total;
-end $$
-Delimiter ;
+DELIMITER $$
+CREATE FUNCTION fn_totalFactura(factId INT) RETURNS DECIMAL(10,2) DETERMINISTIC
+BEGIN
+    DECLARE totalF DECIMAL(10,2) DEFAULT 0.0;
+    DECLARE subtotalF DECIMAL(10,2) DEFAULT 0.0;
+    DECLARE precio DECIMAL(10,2);
+    DECLARE curProductoId INT;
+    DECLARE cursorDetalleFactura CURSOR FOR 
+        SELECT DF.productoId  FROM DetalleFactura DF
+			WHERE DF.facturaId = factId;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET curProductoId = NULL;
+
+    SELECT total INTO totalF FROM Facturas
+		WHERE facturaId = factId;
+
+    IF totalF IS NULL THEN
+        SET totalF = 0.0;
+    END IF;
+
+    OPEN cursorDetalleFactura;
+    totalLoop: LOOP
+        FETCH cursorDetalleFactura INTO curProductoId;
+        IF curProductoId IS NULL THEN
+            LEAVE totalLoop;
+        END IF;
+
+        IF fn_CalcularPromocion(curProductoId) = 1 THEN
+            SELECT P.precioPromocion INTO precio FROM Promociones P
+				WHERE P.productoId = curProductoId
+				ORDER BY P.fechaFinalizacion DESC LIMIT 1;
+        ELSE
+            SELECT P.precioVentaUnitario INTO precio FROM Productos P
+				WHERE P.productoId = curProductoId;
+        END IF;
+        
+        SET subtotalF = subtotalF + precio;
+    END LOOP totalLoop;
+    CLOSE cursorDetalleFactura;
+
+    SET totalF = subtotalF * 1.12;
+
+    CALL sp_asignarTotalFactura(factId, totalF);
+
+    RETURN totalF;
+END$$
+DELIMITER ;
 
 
 

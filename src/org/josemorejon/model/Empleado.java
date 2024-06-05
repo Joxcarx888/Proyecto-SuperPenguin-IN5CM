@@ -7,10 +7,6 @@ package org.josemorejon.model;
 
 import java.sql.Time;
 
-/**
- *
- * @author informatica
- */
 public class Empleado {
     private int empleadoId;
     private String nombreE;
@@ -121,7 +117,5 @@ public class Empleado {
     public String toString() {
         return "Id: " + empleadoId + " | " + nombreE + " " + apellidoE;
     }
-    
-    
-    
+
 }
